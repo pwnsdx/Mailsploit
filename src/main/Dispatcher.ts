@@ -10,6 +10,12 @@ import * as SMTPTransport from 'nodemailer/lib/smtp-transport';
 import {PayloadDirectory, PayloadDirectoryCount} from './Payloads';
 import {Config} from './Config';
 
+const username = process.env.MAILSPLOIT_USERNAME;
+const password = process.env.MAILSPLOIT_PASSWORD;
+const host = process.env.MAILSPLOIT_HOST || 'email-smtp.eu-west-1.amazonaws.com';
+const port = Number(process.env.MAILSPLOIT_PORT || 465);
+const ignoreTls = process.env.MAILSPLOIT_IGNORE_TLS;
+
 export class Dispatcher {
   private transporter;
 
@@ -19,14 +25,15 @@ export class Dispatcher {
     );
   }
 
-  constructor(private username: string, private password: string) {
+  constructor() {
     this.transporter = nodeMailer.createTransport({
-      host: 'email-smtp.eu-west-1.amazonaws.com',
-      port: 465,
-      secure: true,
+      host,
+      port,
+      tls: { rejectUnauthorized: !ignoreTls },
+      secure: !(port === 25 || port === 587),
       auth: {
-        user: this.username,
-        pass: this.password,
+        user: username,
+        pass: password,
       },
       // Pool
       pool: true,

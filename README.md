@@ -2,12 +2,10 @@
 
 ### Mailsploit Server
 
-*Note*: You will need an Amazon SES account with a verified domain in order to use the tool. Also, the web server can only run at 88 miles per hour.
-
 #### How to install
 
 1. Clone the repository
-2. Edit `originalFrom` in `src/main/Config.ts` with your verified SES email address.
+2. Edit `originalFrom` in `src/main/Config.ts` with your email address.
 3. Run the following commands in the terminal:
 ```
 yarn install && yarn dist # Require yarn
@@ -15,9 +13,15 @@ yarn install && yarn dist # Require yarn
 
 #### How to launch the web server
 
-1. Run the following command in the terminal:
+1. Run the following commands in the terminal:
 ```
-SES_USERNAME=[Amazon SES Username] SES_PASSWORD=[Amazon SES Password] node dist/commonjs/index.js
+# First configure the environment
+export MAILSPLOIT_HOST=[SMTP Server Hostname]
+export MAILSPLOIT_PORT=[SMTP Server Port (default 465)]
+export MAILSPLOIT_USERNAME=[SMTP Server Username]
+export MAILSPLOIT_PASSWORD=[SMTP Server Password]
+export MAILSPLOIT_IGNORE_TLS=[Boolean - Ignore self signed certificates]
+npm run build && npm start
 ```
 2. That's it. The server will run on localhost:8081
 
