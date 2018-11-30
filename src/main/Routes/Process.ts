@@ -7,7 +7,7 @@ import * as express from 'express';
 import * as bodyParser from 'body-parser';
 import {Dispatcher} from '../Dispatcher';
 
-const dispatcher = new Dispatcher(<string>process.env.SES_USERNAME, <string>process.env.SES_PASSWORD);
+const dispatcher = new Dispatcher();
 
 const router: express.Router = express.Router();
 const handler: express.Handler = async (req, res): Promise<express.Response> => {
